@@ -2,13 +2,19 @@
 const state = {};
 const resetState = () => {
     state.board = ["", "", "", "", "", "", "", "", ""]
+    state.players = [", "]
     state.currentPlayer = "x";
+    statusDisplay.innerHTML = "Current Turn: x will be going first";
+    document.querySelectorAll(".cell").forEach(cell => cell.innerHTML = "");
 }
+
 
 ////////////// Dom Selector ----> grabbing elements
 const boardElement = document.getElementById('board');
 const playComputerButton = document.getElementById("playComputer");
 const playHumanButton = document.getElementById("playHuman");
+const resetButton = document.getElementById("resetButton")
+const resetOptionsButton = document.getElementById("resetOptions")
 const vsHumanElement = document.getElementById("vsHuman");
 const vsComputerElement = document.getElementById("vsComputer");
 // DOM Selectors Forms 
@@ -31,14 +37,19 @@ const renderBoard = () => {
 }
 ////////////// Button Functions //////////////
 const playHumanClick = () => {
-    if (vsHumanElement.style.display === ""){
+    if (vsHumanElement.style.display !== "block"){
     vsHumanElement.style.display = "block";}
-    else {vsHumanElement.style.display = "block"}}
-    console.log("click" )
+}
 const playComputerClick = () => {
-    if (vsComputerElement.style.display === ""){
-        vsComputerElement.style.display = "block";}
-        else {vsComputerElement.style.display = "block"}}
+    if (vsComputerElement.style.display !== "block"){
+    vsComputerElement.style.display = "block";}
+}
+const resetOptionsClick = () => {
+    if (vsComputerElement.style.display  === "block"){
+        vsComputerElement.style.display = "none";}
+    if (vsHumanElement.style.display  === "block"){
+        vsHumanElement.style.display = "none";}
+      }
 //////////////Name and Display Functions //////////////
 function displayPlayersFunction () {
     let player1Name = document.getElementById("enterPlayer1").value;
@@ -63,9 +74,8 @@ boardElement.addEventListener('click', (event) => {
     if(state.currentPlayer === 'x') {
     state.currentPlayer = 'o'}
     else {state.currentPlayer = 'x'};
-    const currentPlayerTurn = () => `It's ${state.currentPlayer}'s turn`;
+    const currentPlayerTurn = () => `Current Turn: It is now ${state.currentPlayer}'s turn`;
 statusDisplay.innerHTML = currentPlayerTurn();
-    // statusDisplay.innerHTML = currentPlayerTurn();
     renderBoard()
     console.log("here", event.target)
   }
@@ -74,6 +84,8 @@ statusDisplay.innerHTML = currentPlayerTurn();
 ///// Toggles Divs for playing human or computer
 playHumanButton.addEventListener("click", playHumanClick);
 playComputerButton.addEventListener("click", playComputerClick);
+resetButton.addEventListener("click", resetState);
+resetOptionsButton.addEventListener("click", resetOptionsClick);
 
 // Bootstrapping ----> Need to call(invoke) formulas
 resetState();
