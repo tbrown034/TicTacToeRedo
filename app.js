@@ -60,6 +60,45 @@ function displayPlayerFunction () {
     let playerSoloName = document.getElementById("enterPlayerSolo").value;
     document.getElementById("playerName").innerText = "Welcome, " + playerSoloName + "! Let's get ready to play the computer! " + playerSoloName + " you'll be starting first as X. Good luck to you!";
    }
+////////////// win conditions ////////////////
+
+const winCombos = [
+	[0, 1, 2],
+	[3, 4, 5],
+	[6, 7, 8],
+	[0, 3, 6],
+	[1, 4, 7],
+	[2, 5, 8],
+	[0, 4, 8],
+	[2, 4, 6]
+]
+
+const xWinCombos = [
+["x", "x", "x", "", "", "", "", "", ""],
+["", "", "", "x", "x", "x", "", "", ""],
+["", "", "", "", "", "", "x", "x", "x"],
+["x", "", "", "x", "", "", "x", "", ""],
+["", "x", "", "", "x", "", "", "", "x"],
+["", "", "x", "", "", "x", "", "", "x"],
+["x", "", "", "", "x", "", "x", "", ""],
+["", "x", "", "x", "", "x", "", "", ""]]
+
+const oWinCombos = [
+["o", "o", "o", "", "", "", "", "", ""],
+["", "", "", "o", "o", "o", "", "", ""],
+["", "", "", "", "", "", "o", "o", "o"],
+["o", "", "", "o", "", "", "o", "", ""],
+["", "o", "", "", "o", "", "", "", "o"],
+["", "", "o", "", "", "o", "", "", ""],
+["o", "", "", "", "o", "", "o", "", ""],
+["", "o", "", "o", "", "o", "", "", ""]
+]
+
+const xWins = () => {
+
+    
+}
+
 ////////////// EventListeners - clickable cells //////////////
 //// 1. If click on board (return if already filled or if click outside of a cell).
 //// 2. get cellIndex to be unique on the cell elements.
@@ -75,9 +114,12 @@ boardElement.addEventListener('click', (event) => {
     state.currentPlayer = 'o'}
     else {state.currentPlayer = 'x'};
     const currentPlayerTurn = () => `Current Turn: It is now ${state.currentPlayer}'s turn`;
-statusDisplay.innerHTML = currentPlayerTurn();
+    statusDisplay.innerHTML = currentPlayerTurn();
     renderBoard()
-    console.log("here", event.target)
+    console.log("cell click", event.target, typeof(event.target), state.board, typeof(state.board))
+
+
+
   }
 )
 //// Button listners
