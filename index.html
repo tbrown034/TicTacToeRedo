@@ -9,7 +9,51 @@
     <title>Tic Tac Toe (2)</title>
 </head>
 <body>
+    <section class="selectOpponent">
+        <div class="instructions">
+            <h2>First Step: Select Your Opponent!</h2>
+        </div>
+        <div class="selectOpponentButtons">
+            <button type="button" id="playComputer" onclick="playComputerClick()">Play the Computer!</button>
+            <button type="button" id="resetButton" onclick="resetAll()">Reset All!</button>
+            <button type="button" id="playHuman" onclick="playHumanClick()" >Play another human!</button>
+        </div>
+    </section>
+    <section id="vsHuman">
+        <p>You have selected to play a human! Now enter your names belows, hit sumbit and let's go!</p>
+        <Div id="vsHumanForm">
+            <label for="enterPlayer1"> Player 1 :</label>
+            <input type="text" placeholder="Your name here..." id="enterPlayer1">
+            <label for="enterPlayer2"> Player 2 :</label>
+            <input type="text" placeholder="Your name here..." id="enterPlayer2">
+            <button type="submit" onclick="displayPlayersFunction()"  id="vsHumanSubmit" >Sumbit Names!
+            </button>
+            <p id="playerNames"></p>
+        </div> 
+    </section>
+    <section id="vsComputer">        
+        <p>You have selected to play the computer! Enter your name and let's go!</p>
+        <Div id="vsComputerForm">
+            <label for="enterPlayerSolo"> Player:</label>
+            <input type="text" placeholder="Your name here..." id="enterPlayerSolo">
+            <button type="submit" onclick="displayPlayerFunction()"   id="vsComputerSubmit" >Sumbit Name!
+            </button>
+            <p id="playerName"></p>
+    </section>
+    <section class="scoreBoard">
+        <p>Let's Play</p>
+        <h2 class="game--status"></h2>
+        <p id="statusDisplay"></p>
+        <div clas="nameHolder">
+            <button type="button" id="resetButton" onclick="resetAll()">Reset Board</button>
+        </section>
+        </div>
+    </section>
     <h1>Let's Play: Tic Tac Toe!</h1>
     <main id="board"></main>
+    <section class="endMessage">
+        <div>Congrats [name]! You are the winner! Best Luck next time [name]</div>
+        <button type="button" id="resetButton">Play Again!</button>
+    </section>
 </body>
 </html>

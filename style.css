@@ -22,3 +22,96 @@ main {
     grid-template-columns: 33.33% 33.33% 33.33%;
     grid-template-rows: 30vh 30vh 30vh;
 }
+
+.instructions {
+    text-align: center;
+    font-size: 10px;
+    
+}
+
+.selectOpponent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-bottom: 5px dashed aliceblue;
+}
+
+.selectOpponentButtons {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+#vsHuman, #vsComputer {
+    text-align: center;
+    font-size: 10px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 5px dashed aliceblue;
+}
+
+#vsHumanForm, #vsComputerForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.scoreBoard {
+    text-align: center;
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.nameHolder {
+    text-align: center;
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+
+.cell:hover {
+    background-color: rgb(80, 80, 136);
+}
+
+.endMessage {
+    text-align: center;
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: space-around;
+    margin-top: 25px;
+}
+
+
+button {
+    background-color: royalblue;
+    font-size: 5px;
+    color: whitesmoke;
+    border-radius: 12px;
+    margin: 10px;
+    margin-bottom: 25px;
+    box-shadow: 4px 6px rgb(41, 68, 149);
+}
+
+button:hover {
+    background-color: blue;
+}
+button:active {
+    background-color: darkblue;
+}
+
+input {
+    width: 50%;
+    margin: 5px;
+    margin-bottom: 25px;
+    font-size: 10px;
+}
