@@ -1,0 +1,23 @@
+* {
+    background-color: lightskyblue;
+}
+
+.cell {
+    border: 2px solid aliceblue;
+    background-color: midnightblue;
+    font-weight: bolder;
+    font-size: 120px;
+    color: yellow;
+    font-family: Courier, monospace;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main {
+    background-color: aliceblue;
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    grid-template-rows: 30vh 30vh 30vh;
+}
