@@ -5,7 +5,9 @@ const resetState = () => {
     state.players = [", "]
     state.currentPlayer = "x";
     state.gameActive = true;
-    statusDisplay.innerHTML = "Current Turn: x will be going first";
+    currentTurnElement.innerHTML = "";
+    winMessageElement.innerText = "";
+
     document.querySelectorAll(".cell").forEach(cell => cell.innerHTML = "");
 }
 
@@ -17,6 +19,7 @@ const resetButton = document.getElementById("resetButton")
 const resetOptionsButton = document.getElementById("resetOptions")
 const vsHumanElement = document.getElementById("vsHuman");
 const vsComputerElement = document.getElementById("vsComputer");
+const currentTurnElement = document.getElementById("currentTurn")
 const winMessageElement = document.getElementById("winMessage")
 // DOM Selectors Forms 
 const playerNames = document.getElementById("vsHumanForm").value;
@@ -128,7 +131,7 @@ const winCheck = () => {
         }
     }
     if (isWin) {
-        statusDisplay.innerHTML = winningMessage()
+        currentTurn.innerHTML = winningMessage()
         state.gameActive = false;
         return;
     }
@@ -167,7 +170,7 @@ boardElement.addEventListener('click', (event) => {
     state.currentPlayer = 'o'}
     else {state.currentPlayer = 'x'};
     const currentPlayerTurn = () => `Current Turn: It is now ${state.currentPlayer}'s turn`;
-    statusDisplay.innerHTML = currentPlayerTurn();
+    currentTurn.innerHTML = currentPlayerTurn();
     renderBoard();
   }
 )
