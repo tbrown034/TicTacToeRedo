@@ -30,9 +30,15 @@ h1 {
 main {
     display: grid;
     align-content: center;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 20vh 20vh 20vh;
     grid-template-rows: 20vh 20vh 20vh;
 }
+
+.mainBoard {
+    display: flex;
+    justify-content: center;
+}
+
 
 
 
