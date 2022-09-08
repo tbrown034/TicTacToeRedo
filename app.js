@@ -4,6 +4,7 @@ const resetState = () => {
     state.board = ["", "", "", "", "", "", "", "", ""]
     state.players = [", "]
     state.currentPlayer = "x";
+    state.gameActive = true;
     statusDisplay.innerHTML = "Current Turn: x will be going first";
     document.querySelectorAll(".cell").forEach(cell => cell.innerHTML = "");
 }
@@ -61,43 +62,67 @@ function displayPlayerFunction () {
     document.getElementById("playerName").innerText = "Welcome, " + playerSoloName + "! Let's get ready to play the computer! " + playerSoloName + " you'll be starting first as X. Good luck to you!";
    }
 ////////////// win conditions ////////////////
+// const xWinCombos = [
+// ["x", "x", "x", "", "", "", "", "", ""], [0, 1 ,2]
+// ["", "", "", "x", "x", "x", "", "", ""], [3, 4, 5]
+// ["", "", "", "", "", "", "x", "x", "x"], [6, 7, 8]
+// ["x", "", "", "x", "", "", "x", "", ""], [0, 3, 6]
+// ["", "x", "", "", "x", "", "", "", "x"], [1, 4, 7]
+// ["", "", "x", "", "", "x", "", "", "x"], [2, 5, 8]
+// ["x", "", "", "", "x", "", "x", "", ""], [0, 4, 8]
+// ["", "x", "", "x", "", "x", "", "", ""]] [2, 4, 6]
+
+// const oWinCombos = [
+// ["o", "o", "o", "", "", "", "", "", ""], [0, 1 ,2]
+// ["", "", "", "o", "o", "o", "", "", ""], [3, 4, 5]
+// ["", "", "", "", "", "", "o", "o", "o"], [6, 7, 8]
+// ["o", "", "", "o", "", "", "o", "", ""], [0, 3, 6]
+// ["", "o", "", "", "o", "", "", "", "o"], [1, 4, 7]
+// ["", "", "o", "", "", "o", "", "", "0"], [2, 5, 8]
+// ["o", "", "", "", "o", "", "o", "", ""], [0, 4, 8]
+// ["", "o", "", "o", "", "o", "", "", ""] [2, 4, 6]
+// ]
+
+// Check Win logic: WinCombos (an array of arrays) are the results of the winning conditions: 3 row, 3 columns, 2 diagnoals. In winCheck i loop through my state.board to check if the current state is equal to one of those conditions (winningcondition[i] representing 0-7 of the win conditions). Example: if we do i=2, we would be checking if Xs or 0s hit the [6, 7, 8] (the bottom row), if so, current player is the winner. I then assign three new variable (SpotA, SpotB, SpotC) that represent the winning spots (index) in the winning condition. If they hit all three that means, current player is the winner. Since [0,1,2] represents i=0 that's what we start with and then it will iteriate over the other solutions as i++ (increments).
 
 const winCombos = [
-	[0, 1, 2],
-	[3, 4, 5],
-	[6, 7, 8],
-	[0, 3, 6],
-	[1, 4, 7],
-	[2, 5, 8],
-	[0, 4, 8],
-	[2, 4, 6]
+    //rows wins
+	[0, 1, 2], // winningCondition[0]
+	[3, 4, 5], // winningCondition[1]
+	[6, 7, 8], // winningCondition[2]
+    // columns wins
+	[0, 3, 6], // winningCondition[3]
+	[1, 4, 7], // winningCondition[4]
+	[2, 5, 8], // winningCondition[5]
+    // diagnoals wins
+	[0, 4, 8], // winningCondition[6]
+	[2, 4, 6] // winningCondition[7]
 ]
 
-const xWinCombos = [
-["x", "x", "x", "", "", "", "", "", ""],
-["", "", "", "x", "x", "x", "", "", ""],
-["", "", "", "", "", "", "x", "x", "x"],
-["x", "", "", "x", "", "", "x", "", ""],
-["", "x", "", "", "x", "", "", "", "x"],
-["", "", "x", "", "", "x", "", "", "x"],
-["x", "", "", "", "x", "", "x", "", ""],
-["", "x", "", "x", "", "x", "", "", ""]]
+const winCheck = () => {
+    let isWin = false;
+    for (let i = 0; i <= 7; i++) {
+        const winCondition = winCombos[i];
+        let spotA = state.board[winCondition[0]];
+        let spotB = state.board[winCondition[1]];
+        let spotC = state.board[winCondition[2]];
+        // if either are the spots are empty, we contiune since no winners
+        if (spotA === '' || spotB === '' || spotC === '') { 
+            continue;
+        }
+        if (spotA === spotB && spotB === spotC ) {
+            isWin = true;
+            break 
+        }
+        console.log("winner?", isWin);
+    }
+    if (isWin = true) {
+        state.gameActive = false;
+        return;
+    }
 
-const oWinCombos = [
-["o", "o", "o", "", "", "", "", "", ""],
-["", "", "", "o", "o", "o", "", "", ""],
-["", "", "", "", "", "", "o", "o", "o"],
-["o", "", "", "o", "", "", "o", "", ""],
-["", "o", "", "", "o", "", "", "", "o"],
-["", "", "o", "", "", "o", "", "", ""],
-["o", "", "", "", "o", "", "o", "", ""],
-["", "o", "", "o", "", "o", "", "", ""]
-]
-
-const xWins = () => {
-
-    
 }
+
 
 ////////////// EventListeners - clickable cells //////////////
 //// 1. If click on board (return if already filled or if click outside of a cell).
@@ -115,13 +140,13 @@ boardElement.addEventListener('click', (event) => {
     else {state.currentPlayer = 'x'};
     const currentPlayerTurn = () => `Current Turn: It is now ${state.currentPlayer}'s turn`;
     statusDisplay.innerHTML = currentPlayerTurn();
-    renderBoard()
-    console.log("cell click", event.target, typeof(event.target), state.board, typeof(state.board))
-
-
-
+    renderBoard();
+    winCheck();
   }
 )
+
+
+
 //// Button listners
 ///// Toggles Divs for playing human or computer
 playHumanButton.addEventListener("click", playHumanClick);
@@ -132,4 +157,5 @@ resetOptionsButton.addEventListener("click", resetOptionsClick);
 // Bootstrapping ----> Need to call(invoke) formulas
 resetState();
 renderBoard();
+
 
