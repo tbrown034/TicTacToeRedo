@@ -9,7 +9,6 @@ const resetState = () => {
     document.querySelectorAll(".cell").forEach(cell => cell.innerHTML = "");
 }
 
-
 ////////////// Dom Selector ----> grabbing elements
 const boardElement = document.getElementById('board');
 const playComputerButton = document.getElementById("playComputer");
@@ -18,6 +17,7 @@ const resetButton = document.getElementById("resetButton")
 const resetOptionsButton = document.getElementById("resetOptions")
 const vsHumanElement = document.getElementById("vsHuman");
 const vsComputerElement = document.getElementById("vsComputer");
+const winMessageElement = document.getElementById("winMessage")
 // DOM Selectors Forms 
 const playerNames = document.getElementById("vsHumanForm").value;
 const player1Name = document.getElementById("enterPlayer1").value;
@@ -61,6 +61,17 @@ function displayPlayerFunction () {
     let playerSoloName = document.getElementById("enterPlayerSolo").value;
     document.getElementById("playerName").innerText = "Welcome, " + playerSoloName + "! Let's get ready to play the computer! " + playerSoloName + " you'll be starting first as X. Good luck to you!";
    }
+const winningMessage = () => {
+    winMessageElement.innerText = "${state.currentPlayer} Won"
+
+
+        // `Player ${currentPlayer} has won!`
+
+        // state.currentPlayer = 'o'}
+        // else {state.currentPlayer = 'x'};
+}
+
+
 ////////////// win conditions ////////////////
 // const xWinCombos = [
 // ["x", "x", "x", "", "", "", "", "", ""], [0, 1 ,2]
@@ -112,16 +123,31 @@ const winCheck = () => {
         }
         if (spotA === spotB && spotB === spotC ) {
             isWin = true;
-            console.log("winner?", isWin);
+            console.log("is it a winner?", isWin, "is the game active?", state.gameActive);
             break 
         }
     }
-    if (isWin = true) {
+    if (isWin) {
+        statusDisplay.innerHTML = winningMessage()
         state.gameActive = false;
         return;
     }
+    // let isDraw = state.board.include("")
+    // if (isDraw) {
+    //     statusDisplay.innerHTML = drawMessage();
+    //     state.gameActive = false;
+    //     return
+    // }
 
 }
+
+const stopOrGo = () => {
+        if (state.gameActive = false) {
+
+       
+        
+        }}
+
 
 
 ////////////// EventListeners - clickable cells //////////////
@@ -136,6 +162,7 @@ boardElement.addEventListener('click', (event) => {
     let cellIndex = event.target.dataset.index;
     state.board[cellIndex] = state.currentPlayer;
     winCheck();
+    stopOrGo()
     if(state.currentPlayer === 'x') {
     state.currentPlayer = 'o'}
     else {state.currentPlayer = 'x'};
@@ -157,5 +184,6 @@ resetOptionsButton.addEventListener("click", resetOptionsClick);
 // Bootstrapping ----> Need to call(invoke) formulas
 resetState();
 renderBoard();
+stopOrGo()
 
 
