@@ -9,11 +9,13 @@
     <title>Tic Tac Toe (2)</title>
 </head>
 <body>
-    <h1>Let's Play: Tic Tac Toe!</h1>
-    <section class="selectOpponent">
+    <header>
+        <h1>Let's Play: Tic Tac Toe!</h1>
+        <section class="selectOpponent">
         <div class="instructions">
             <h2>First Step: Select Your Opponent!</h2>
         </div>
+    </header>    
         <div class="selectOpponentButtons">
             <button type="button" id="playComputer" onclick="playComputerClick()">Play the Computer!</button>
             <button type="button" id="resetOptions" onclick="resetOptionsClick()" >Reset options</button>
@@ -23,12 +25,12 @@
     <section id="vsHuman">
         <p>You have selected to play a human! Now enter your names belows, hit sumbit and let's go!</p>
         <Div id="vsHumanForm">
-            <label for="enterPlayer1"> Player 1 :</label>
-            <input type="text" placeholder="Your name here..." id="enterPlayer1">
-            <label for="enterPlayer2"> Player 2 :</label>
-            <input type="text" placeholder="Your name here..." id="enterPlayer2">
-            <button type="submit" onclick="displayPlayersFunction()"  id="vsHumanSubmit" >Sumbit Names!
-            </button>
+                <label for="enterPlayer1"> Player 1 :</label>
+                <input type="text" placeholder="Your name here..." id="enterPlayer1">
+                <label for="enterPlayer2"> Player 2 :</label>
+                <input type="text" placeholder="Your name here..." id="enterPlayer2">
+                <button type="submit" onclick="displayPlayersFunction()"  id="vsHumanSubmit" >Sumbit Names!
+                </button>
             <p id="playerNames"></p>
         </div> 
     </section>
@@ -48,8 +50,11 @@
         </section>
         </div>
     </section>
-    <main id="board"></main>
-
+        <main id="board"></main>
     </section>
+    <footer>
+        <p>Thank you for playing!<br/>
+        Visit my personal profile site to see more of my coding/data/journalism projects.</p>
+        </footer>
 </body>
 </html>
