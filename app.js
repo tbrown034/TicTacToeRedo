@@ -112,9 +112,9 @@ const winCheck = () => {
         }
         if (spotA === spotB && spotB === spotC ) {
             isWin = true;
+            console.log("winner?", isWin);
             break 
         }
-        console.log("winner?", isWin);
     }
     if (isWin = true) {
         state.gameActive = false;
@@ -135,13 +135,13 @@ boardElement.addEventListener('click', (event) => {
         return;}
     let cellIndex = event.target.dataset.index;
     state.board[cellIndex] = state.currentPlayer;
+    winCheck();
     if(state.currentPlayer === 'x') {
     state.currentPlayer = 'o'}
     else {state.currentPlayer = 'x'};
     const currentPlayerTurn = () => `Current Turn: It is now ${state.currentPlayer}'s turn`;
     statusDisplay.innerHTML = currentPlayerTurn();
     renderBoard();
-    winCheck();
   }
 )
 
