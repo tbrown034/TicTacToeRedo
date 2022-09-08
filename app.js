@@ -23,9 +23,6 @@ const currentTurnElement = document.getElementById("currentTurn")
 const winMessageElement = document.getElementById("winMessage")
 // DOM Selectors Forms 
 const playerNames = document.getElementById("vsHumanForm").value;
-const player1Name = document.getElementById("enterPlayer1").value;
-const player2Name = document.getElementById("enterPlayer2").value;
-const playerSoloName = document.getElementById("enterPlayerSolo").value;
 ////////////// Dom Manipulators ----> rendering
 //// Create board, loop through, create cells (via divs), add classList to those cells (to be able to style). Set innerHTML on the cell element to const square, which goes to state.board and uses the index to tell where the cell is at  ... also added dataset index(0-8). Finally, append the cells to the board. 
 const renderBoard = () => {
@@ -58,20 +55,26 @@ const resetOptionsClick = () => {
 function displayPlayersFunction () {
     let player1Name = document.getElementById("enterPlayer1").value;
     let player2Name = document.getElementById("enterPlayer2").value;
-    document.getElementById("playerNames").innerText = "Welcome, " + player1Name + " and " + player2Name + "! Let's get ready to play! " + player1Name + " will go first as X. " + player2Name + " will go second as O. Good luck to you both!";
-   }
+    document.getElementById("playerNames").innerText = `Welcome ${player1Name} and ${player2Name}!! Let's get ready to play! ${player1Name} will go first as X and ${player2Name} will go second as O. Good luck to you both!`}
+
 function displayPlayerFunction () {
     let playerSoloName = document.getElementById("enterPlayerSolo").value;
-    document.getElementById("playerName").innerText = "Welcome, " + playerSoloName + "! Let's get ready to play the computer! " + playerSoloName + " you'll be starting first as X. Good luck to you!";
-   }
+    document.getElementById("playerName").innerText = `Welcome ${playerSoloName}!! Let's get ready to play! ${playerSoloName} will go first as X and the computer will go second as O. Good luck to you!`}
+
 const winningMessage = () => {
-    winMessageElement.innerText = `We have a winner! And our winner is ${player1Name} playing as ${state.currentPlayer}!!`
+    let player1Name = document.getElementById("enterPlayer1").value;
+    let player2Name = document.getElementById("enterPlayer2").value;
+    if (state.currentPlayer === 'x') {
+        document.getElementById("winMessage").innerText =
+    `We have a winner! And our winner is ${player1Name} playing as ${state.currentPlayer}!!`
+    }
+    else { document.getElementById("winMessage").innerText =
+    `We have a winner! And our winner is ${player2Name} playing as ${state.currentPlayer}!!`
+     }
 
 
-        // `Player ${currentPlayer} has won!`
-
-        // state.currentPlayer = 'o'}
-        // else {state.currentPlayer = 'x'};
+    // document.getElementById("winMessage").innerText =
+    // `We have a winner! And our winner is ${player1Name} playing as ${state.currentPlayer}!!`
 }
 
 
@@ -144,12 +147,11 @@ const winCheck = () => {
 
 }
 
-const stopOrGo = () => {
-        if (state.gameActive = false) {
+// const stopOrGo = () => {
+//         if (state.gameActive = false) {
 
-       
-        
-        }}
+
+//         }}
 
 
 
@@ -164,8 +166,9 @@ boardElement.addEventListener('click', (event) => {
         return;}
     let cellIndex = event.target.dataset.index;
     state.board[cellIndex] = state.currentPlayer;
+    if (!state.gameActive) {
+        return};
     winCheck();
-    stopOrGo()
     if(state.currentPlayer === 'x') {
     state.currentPlayer = 'o'}
     else {state.currentPlayer = 'x'};
@@ -187,6 +190,6 @@ resetOptionsButton.addEventListener("click", resetOptionsClick);
 // Bootstrapping ----> Need to call(invoke) formulas
 resetState();
 renderBoard();
-stopOrGo()
+// stopOrGo()
 
 
