@@ -62,7 +62,7 @@ function displayPlayerFunction () {
     document.getElementById("playerName").innerText = "Welcome, " + playerSoloName + "! Let's get ready to play the computer! " + playerSoloName + " you'll be starting first as X. Good luck to you!";
    }
 const winningMessage = () => {
-    winMessageElement.innerText = "${state.currentPlayer} Won"
+    winMessageElement.innerText = `We have a winner! And our winner is ${player1Name} playing as ${state.currentPlayer}`
 
 
         // `Player ${currentPlayer} has won!`
