@@ -1,17 +1,17 @@
-////////////// initil state ----> Setting up the Game Loop
+//// State ----> Setting up the Game Loop
 const state = {};
 const resetState = () => {
     state.board = ["", "", "", "", "", "", "", "", ""]
     state.players = [", "]
     state.currentPlayer = "x";
     state.gameActive = true;
-    currentTurnElement.innerHTML = "";
+    document.getElementById("currentTurn").innerHTML = "";
     winMessageElement.innerText = "";
-
+    document.getElementById("drawMessage").innerText = "";
     document.querySelectorAll(".cell").forEach(cell => cell.innerHTML = "");
 }
 
-////////////// Dom Selector ----> grabbing elements
+//// Dom Selector ----> grabbing elements
 const boardElement = document.getElementById('board');
 const playComputerButton = document.getElementById("playComputer");
 const playHumanButton = document.getElementById("playHuman");
@@ -21,10 +21,9 @@ const vsHumanElement = document.getElementById("vsHuman");
 const vsComputerElement = document.getElementById("vsComputer");
 const currentTurnElement = document.getElementById("currentTurn")
 const winMessageElement = document.getElementById("winMessage")
-// DOM Selectors Forms 
 const playerNames = document.getElementById("vsHumanForm").value;
-////////////// Dom Manipulators ----> rendering
-//// Create board, loop through, create cells (via divs), add classList to those cells (to be able to style). Set innerHTML on the cell element to const square, which goes to state.board and uses the index to tell where the cell is at  ... also added dataset index(0-8). Finally, append the cells to the board. 
+//// Dom Manipulators ----> rendering
+// Logic: Create board, loop through, create cells (via divs), add classList to those cells (to be able to style). Set innerHTML on the cell element to const square, which goes to state.board and uses the index to tell where the cell is at  ... also added dataset index(0-8). Finally, append the cells to the board. 
 const renderBoard = () => {
       boardElement.innerHTML = '';
     for (let i = 0; i < state.board.length; i++) {
@@ -36,7 +35,7 @@ const renderBoard = () => {
         boardElement.appendChild(cellElement);
     }
 }
-////////////// Button Functions //////////////
+//// Button Functions 
 const playHumanClick = () => {
     if (vsHumanElement.style.display !== "block"){
     vsHumanElement.style.display = "block";}
@@ -51,7 +50,8 @@ const resetOptionsClick = () => {
     if (vsHumanElement.style.display  === "block"){
         vsHumanElement.style.display = "none";}
       }
-//////////////Name and Display Functions //////////////
+
+// Helper Functions
 function displayPlayersFunction () {
     let player1Name = document.getElementById("enterPlayer1").value;
     let player2Name = document.getElementById("enterPlayer2").value;
@@ -61,21 +61,31 @@ function displayPlayerFunction () {
     let playerSoloName = document.getElementById("enterPlayerSolo").value;
     document.getElementById("playerName").innerText = `Welcome ${playerSoloName}!! Let's get ready to play! ${playerSoloName} will go first as X and the computer will go second as O. Good luck to you!`}
 
+const resetTurnDisplay = () => {
+        document.getElementById("currentTurn").innerHTML =
+        ""
+    }
+
 const winningMessage = () => {
+
     let player1Name = document.getElementById("enterPlayer1").value;
     let player2Name = document.getElementById("enterPlayer2").value;
     if (state.currentPlayer === 'x') {
         document.getElementById("winMessage").innerText =
-    `We have a winner! And our winner is ${player1Name} playing as ${state.currentPlayer}!!`
+    `We have a winner! And our winner is ${player1Name}, playing as ${state.currentPlayer}!!`
     }
     else { document.getElementById("winMessage").innerText =
-    `We have a winner! And our winner is ${player2Name} playing as ${state.currentPlayer}!!`
+    `We have a winner! And our winner is ${player2Name}, playing as ${state.currentPlayer}!!`
+    
      }
-
-
-    // document.getElementById("winMessage").innerText =
-    // `We have a winner! And our winner is ${player1Name} playing as ${state.currentPlayer}!!`
 }
+
+const drawMessage = () => {
+    (resetTurnDisplay);
+      document.getElementById("drawMessage").innerText =
+ `No one win or loses. Draw game.`;}
+
+
 
 
 ////////////// win conditions ////////////////
@@ -128,68 +138,60 @@ const winCheck = () => {
             continue;
         }
         if (spotA === spotB && spotB === spotC ) {
+            document.getElementById("currentTurn").innerText =
+            "";
             isWin = true;
             console.log("is it a winner?", isWin, "is the game active?", state.gameActive);
             break 
         }
     }
     if (isWin) {
-        currentTurn.innerHTML = winningMessage()
+        winningMessage();
         state.gameActive = false;
         return;
     }
-    // let isDraw = state.board.include("")
-    // if (isDraw) {
-    //     statusDisplay.innerHTML = drawMessage();
-    //     state.gameActive = false;
-    //     return
-    // }
+    let isDraw = !state.board.includes("");
+    if (isDraw) {
+        drawMessage();
+        state.gameActive = false;
+        return
+    }
 
 }
 
-// const stopOrGo = () => {
-//         if (state.gameActive = false) {
-
-
-//         }}
-
-
-
-////////////// EventListeners - clickable cells //////////////
-//// 1. If click on board (return if already filled or if click outside of a cell).
-//// 2. get cellIndex to be unique on the cell elements.
-//// 3. Place marks and switch placers
-//// 4. Render so it displays with new state changes 
+//// Board event listener
+// Logic: 1. If click on board (return if already filled or if click outside of a cell).
+// 2. get cellIndex to be unique on the cell elements.
+// 3. Place marks and switch placers
+// 4. Render so it displays with new state changes 
 boardElement.addEventListener('click', (event) => {
+    let player1Name = document.getElementById("enterPlayer1").value;
+    let player2Name = document.getElementById("enterPlayer2").value;
     if (event.target.className !== 'cell') return;
     if (event.target.innerHTML == 'x' || event.target.innerHTML == 'o'){
         return;}
     let cellIndex = event.target.dataset.index;
     state.board[cellIndex] = state.currentPlayer;
-    if (!state.gameActive) {
-        return};
+    if (!state.gameActive) {        
+        return}; // if gameActive is false, someone has won, so no more clickable cells
     winCheck();
     if(state.currentPlayer === 'x') {
     state.currentPlayer = 'o'}
     else {state.currentPlayer = 'x'};
-    const currentPlayerTurn = () => `Current Turn: It is now ${state.currentPlayer}'s turn`;
-    currentTurn.innerHTML = currentPlayerTurn();
+    if(state.currentPlayer === 'x') { 
+        currentTurnElement.innerHTML = `${player1Name}, playing as ${state.currentPlayer}, will go next!`}
+        else {
+            currentTurnElement.innerHTML = `${player2Name}, playing as ${state.currentPlayer}, will go next!`}
     renderBoard();
   }
 )
-
-
-
-//// Button listners
-///// Toggles Divs for playing human or computer
+//// Button event listners
 playHumanButton.addEventListener("click", playHumanClick);
 playComputerButton.addEventListener("click", playComputerClick);
 resetButton.addEventListener("click", resetState);
 resetOptionsButton.addEventListener("click", resetOptionsClick);
-
-// Bootstrapping ----> Need to call(invoke) formulas
+//// Bootstrapping ----> Need to call(invoke) formulas
 resetState();
 renderBoard();
-// stopOrGo()
 
 
